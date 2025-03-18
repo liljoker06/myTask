@@ -1,0 +1,28 @@
+Description :
+Mytask est une application mobile développée avec React Native et Expo, permettant aux utilisateurs de gérer leurs tâches quotidiennes et leur agenda. L'application offre une interface intuitive et simple pour ajouter, modifier, et organiser les tâches tout en permettant de visualiser un calendrier avec des événements et des rappels.
+L'objectif de TaskMaster est de fournir aux utilisateurs un outil centralisé pour organiser leurs journées, prioriser leurs tâches et suivre leur progression. L'application propose une vue en liste pour les tâches et un calendrier pour les événements, avec la possibilité de synchroniser ces deux éléments pour une gestion optimale du temps.
+Fonctionnalités principales :
+Gestion des tâches :
+Ajout de tâches : Les utilisateurs peuvent créer des tâches avec un titre, une description, une priorité, et une date limite.
+Modification et suppression : Les utilisateurs peuvent modifier ou supprimer leurs tâches à tout moment.
+Marquage de tâches comme terminées : Une fonctionnalité permettant de cocher une tâche une fois terminée.
+Filtrage des tâches : Les utilisateurs peuvent filtrer leurs tâches selon la date, la priorité, ou l’état de la tâche (complète/incomplète).
+Agenda et calendrier :
+Affichage d'un calendrier : Un calendrier interactif pour visualiser les tâches et événements programmés.
+Ajout d'événements : Les utilisateurs peuvent créer des événements avec des dates et heures spécifiques, tels que des rendez-vous ou des réunions.
+Rappels et notifications : L’application envoie des notifications pour rappeler à l'utilisateur ses tâches ou événements à venir.
+Authentification des utilisateurs :
+Inscription et connexion : Les utilisateurs peuvent créer un compte et se connecter pour accéder à leur agenda et à leurs tâches personnels.
+Gestion des sessions : L’application garde les utilisateurs connectés jusqu’à ce qu’ils se déconnectent ou suppriment leur compte.
+Backend avec Node.js et MongoDB :
+API RESTful : Un backend en Node.js exposera des API pour interagir avec les données des utilisateurs, gérer les tâches, et les événements.
+Base de données MongoDB : Utilisation de MongoDB pour stocker les informations liées aux utilisateurs, leurs tâches, et leurs événements.
+Sécurité et gestion des données : Les informations personnelles et les données des tâches seront sécurisées et stockées de manière fiable dans la base de données.
+Technologies utilisées :
+Frontend : React Native avec Expo
+Backend : Node.js avec Express
+Base de données : MongoDB
+Authentification : JWT (JSON Web Tokens) pour sécuriser l’accès des utilisateurs
+Notifications push : Expo Push Notifications pour envoyer des rappels aux utilisateurs ( je vais essayé si j'ai le temps) 
+Objectif :
+Créer une application mobile fluide et accessible pour gérer facilement les tâches quotidiennes et l'agenda personnel des utilisateurs. TaskMaster vise à améliorer la productivité en offrant une interface simple mais puissante pour organiser et prioriser efficacement les activités quotidiennes.
