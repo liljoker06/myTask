@@ -121,3 +121,17 @@
 [2025-03-18T23:18:25.420Z] [INFO] Connexion réussie {
   "userId": "67d9fee5ff31eb140febb1fa"
 }
+[2025-03-18T23:21:11.671Z] [INFO] Tentative d'inscription {
+  "username": "notjoker",
+  "email": "Notjoker@gmail.com",
+  "password": "password"
+}
+[2025-03-18T23:21:11.728Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9ffe779bfd3132e89b2ed"
+}
+[2025-03-18T23:21:11.750Z] [INFO] Tentative de connexion {
+  "email": "Notjoker@gmail.com"
+}
+[2025-03-18T23:21:11.800Z] [INFO] Connexion réussie {
+  "userId": "67d9ffe779bfd3132e89b2ed"
+}
