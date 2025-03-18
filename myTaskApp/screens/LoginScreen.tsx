@@ -1,56 +1,89 @@
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Logo from '../components/Logo';
+import { useAuth } from '../app/context/AuthContext';
 import InputField from '../components/InputField';
-import Footer from '../components/Footer';
+import Logo from '../components/Logo';
 
-export default function LoginScreen() {
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
+  const { onLogin, onRegister } = useAuth();
 
-  const handleLogin = () => {
-    // Logic for handling login
-    if (email === 'test@example.com' && password === 'password') {
-      console.log('Login successful');
+  const handleLogin = async () => {
+    const result = await onLogin(email, password);
+    if (result && result.error) {
+      alert(result.msg);
+    }
+  };
+
+  const handleRegister = async () => {
+    const result = await onRegister(email, username, password);
+    if (result && result.error) {
+      alert(result.msg);
     } else {
-      console.log('Invalid credentials');
+      handleLogin();
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Logo />
-      <Text style={styles.title}>Welcome!</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps='handled'>
+        <Logo />
+        <Text style={styles.title}>{isRegistering ? 'Create an Account' : 'Welcome!'}</Text>
 
-      <InputField
-        placeholder="Email Address"
-        value={email}
-        onChangeText={setEmail}
-      />
+        {isRegistering && (
+          <InputField
+            placeholder="Username"
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+          />
+        )}
 
-      <InputField
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <InputField
+          placeholder="Email Address"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
 
-      {/* Custom Login Button */}
-      <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
+        <InputField
+          placeholder="Password"
+          secureTextEntry={false} // Allows visibility while typing
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
 
-      <Footer />
-    </View>
+        {/* Bouton Connexion ou Inscription */}
+        <TouchableOpacity
+          onPress={isRegistering ? handleRegister : handleLogin}
+          style={styles.loginButton}>
+          <Text style={styles.loginButtonText}>{isRegistering ? 'Register' : 'Login'}</Text>
+        </TouchableOpacity>
+
+        {/* Bascule entre Login et Register */}
+        <TouchableOpacity onPress={() => setIsRegistering(!isRegistering)}>
+          <Text style={styles.toggleText}>
+            {isRegistering ? 'Already have an account? Login' : "Don't have an account? Register"}
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     padding: 16,
   },
   title: {
@@ -62,7 +95,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 12,
     marginTop: 16,
-    backgroundColor: '#007BFF', // Blue color for the button
+    backgroundColor: '#007BFF',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -72,20 +105,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  forgotPassword: {
+  toggleText: {
     color: 'blue',
-    marginTop: 8,
-    textAlign: 'center',
-  },
-  registerContainer: {
     marginTop: 16,
-    marginBottom: 24,
     textAlign: 'center',
-  },
-  registerText: {
-    textAlign: 'center',
-  },
-  registerLink: {
-    color: 'blue',
   },
 });
+
+export default LoginScreen;

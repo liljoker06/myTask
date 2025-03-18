@@ -1,0 +1,123 @@
+[2025-03-18T22:48:30.017Z] [INFO] Tentative d'inscription {
+  "username": "password",
+  "email": "test@gmail.com"
+}
+[2025-03-18T22:48:30.118Z] [ERROR] Erreur lors de l'inscription "E11000 duplicate key error collection: taskmaster.users index: username_1 dup key: { username: \"password\" }"
+[2025-03-18T22:48:54.579Z] [INFO] Tentative d'inscription {
+  "username": "password",
+  "email": "test2@gmail.com"
+}
+[2025-03-18T22:48:54.665Z] [ERROR] Erreur lors de l'inscription "E11000 duplicate key error collection: taskmaster.users index: username_1 dup key: { username: \"password\" }"
+[2025-03-18T22:50:15.215Z] [INFO] Tentative d'inscription {
+  "username": "password",
+  "email": "test2f@gmail.com"
+}
+[2025-03-18T22:50:15.322Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9f8a7776788d49a80385a"
+}
+[2025-03-18T22:50:15.340Z] [INFO] Tentative de connexion {
+  "email": "test2f@gmail.com"
+}
+[2025-03-18T22:50:15.385Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "test2f@gmail.com"
+}
+[2025-03-18T22:51:54.136Z] [INFO] Tentative d'inscription {
+  "username": "password",
+  "email": "test2f@gmail.com",
+  "password": "Test2"
+}
+[2025-03-18T22:51:54.245Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9f90a0beb720d88724655"
+}
+[2025-03-18T22:51:54.262Z] [INFO] Tentative de connexion {
+  "email": "test2f@gmail.com"
+}
+[2025-03-18T22:51:54.305Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "test2f@gmail.com"
+}
+[2025-03-18T22:56:14.596Z] [INFO] Tentative d'inscription {
+  "username": "joker",
+  "email": "joker@gmail.com",
+  "password": "password"
+}
+[2025-03-18T22:56:14.692Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9fa0e0beb720d88724659"
+}
+[2025-03-18T22:56:14.712Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T22:56:14.755Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T22:58:46.907Z] [INFO] Tentative d'inscription {
+  "username": "aladin",
+  "email": "aladin@gmail.com",
+  "password": "password"
+}
+[2025-03-18T22:58:47.016Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9faa6ff48a347578247c5"
+}
+[2025-03-18T22:58:47.038Z] [INFO] Tentative de connexion {
+  "email": "aladin@gmail.com"
+}
+[2025-03-18T22:58:47.082Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "aladin@gmail.com"
+}
+[2025-03-18T23:01:59.403Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:01:59.463Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:04:18.765Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:04:18.771Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:04:29.389Z] [INFO] Tentative d'inscription {
+  "username": "Joker",
+  "email": "joker@gmail.com",
+  "password": "password"
+}
+[2025-03-18T23:04:29.502Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9fbfd930469955e8d0b17"
+}
+[2025-03-18T23:04:29.519Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:04:29.565Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:08:42.169Z] [INFO] Tentative d'inscription {
+  "username": "joker",
+  "email": "joker@gmail.com",
+  "password": "password"
+}
+[2025-03-18T23:08:42.279Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9fcfa291f5e796df14f1e"
+}
+[2025-03-18T23:08:42.301Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:08:42.348Z] [ERROR] Échec de connexion : mot de passe invalide {
+  "email": "joker@gmail.com"
+}
+[2025-03-18T23:16:53.832Z] [INFO] Tentative d'inscription {
+  "username": "Joker",
+  "email": "Joker@gmail.com",
+  "password": "password"
+}
+[2025-03-18T23:16:53.902Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-18T23:16:53.924Z] [INFO] Tentative de connexion {
+  "email": "Joker@gmail.com"
+}
+[2025-03-18T23:16:53.974Z] [ERROR] Erreur lors de la connexion "secretOrPrivateKey must have a value"
+[2025-03-18T23:18:25.359Z] [INFO] Tentative de connexion {
+  "email": "Joker@gmail.com"
+}
+[2025-03-18T23:18:25.420Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
