@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react';
-import { useAuth } from '../app/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import InputField from '../components/InputField';
 import Logo from '../components/Logo';
 
@@ -52,7 +52,7 @@ const LoginScreen = () => {
 
         <InputField
           placeholder="Password"
-          secureTextEntry={false} // Allows visibility while typing
+          secureTextEntry={true} // Allows visibility while typing
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
