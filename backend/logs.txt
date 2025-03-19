@@ -135,3 +135,35 @@
 [2025-03-18T23:21:11.800Z] [INFO] Connexion réussie {
   "userId": "67d9ffe779bfd3132e89b2ed"
 }
+[2025-03-19T10:20:56.821Z] [INFO] Tentative d'inscription {
+  "username": "Joker",
+  "email": "Joker@gmail.com",
+  "password": "password"
+}
+[2025-03-19T10:20:56.930Z] [INFO] Utilisateur inscrit avec succès {
+  "userId": "67da9a88d2d557f3ec43c738"
+}
+[2025-03-19T10:20:56.949Z] [INFO] Tentative de connexion {
+  "email": "Joker@gmail.com"
+}
+[2025-03-19T10:20:57.026Z] [INFO] Connexion réussie {
+  "userId": "67da9a88d2d557f3ec43c738"
+}
+[2025-03-19T10:25:31.605Z] [INFO] Tentative de connexion {
+  "email": "joker"
+}
+[2025-03-19T10:25:31.607Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "joker"
+}
+[2025-03-19T10:25:37.338Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-19T10:25:37.342Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "joker@gmail.com"
+}
+[2025-03-19T10:25:52.729Z] [INFO] Tentative de connexion {
+  "email": "Joker@gmail.com"
+}
+[2025-03-19T10:25:52.802Z] [INFO] Connexion réussie {
+  "userId": "67da9a88d2d557f3ec43c738"
+}
