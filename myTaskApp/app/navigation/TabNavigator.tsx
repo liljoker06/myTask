@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 
+
+
 // Importer les écrans pour chaque onglet
 import HomeScreen from '../screens/HomeScreen';
 import UncomingScreen from '../screens/UncomingScreen';
@@ -33,7 +35,7 @@ export default function TabNavigator() {
           component={HomeScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-home" color={color} size={size} />
+              <Ionicons name="home-outline" color={color} size={size} />
             ),
           }}
         />
@@ -42,7 +44,7 @@ export default function TabNavigator() {
           component={UncomingScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-compass" color={color} size={size} />
+              <Ionicons name="compass-outline" color={color} size={size} />
             ),
           }}
         />
@@ -51,7 +53,7 @@ export default function TabNavigator() {
           component={ProfileScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-person" color={color} size={size} />
+              <Ionicons name="person-outline" color={color} size={size} />
             ),
           }}
         />
@@ -59,7 +61,7 @@ export default function TabNavigator() {
 
       {/* Bouton + flottant */}
       <TouchableOpacity style={styles.addButton}>
-        <Ionicons name="ios-add" color="#fff" size={30} />
+        <Ionicons name="add-outline" color="#fff" size={30} />
       </TouchableOpacity>
     </View>
   );
