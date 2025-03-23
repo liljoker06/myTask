@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import DateDisplay from "../components/DateDisplay";
 import TaskCard from "../components/TaskCard";
 import TaskDetailSidebar from "../components/TaskDetailSidebar"; 
+import WeeklyProgressBar from "../components/WeeklyProgressBar";
 import axios from "axios";
 import { API_URL } from "@env";
 import { useAuth } from "../context/AuthContext";
@@ -19,13 +20,13 @@ export default function HomeScreen({ refreshTasks }) {
   // ✅ Charger les tâches du jour
   const fetchTasks = async () => {
     try {
-      console.log("📡 Fetching tasks from API..."); // ✅ Debug
+      console.log("📡 Fetching tasks from API..."); 
 
       const response = await axios.get(`${API_URL}/task/`, {
         headers: { Authorization: `Bearer ${authState.token}` },
       });
 
-      console.log("✅ API Response:", response.data); // ✅ Debug API
+      console.log("✅ API Response:", response.data); 
 
       const todayTasks = response.data.filter((task) => {
         const startDate = new Date(task.start_date);
@@ -67,6 +68,7 @@ export default function HomeScreen({ refreshTasks }) {
     <View style={styles.container}>
       <Header />
       <DateDisplay onDateChange={setCurrentDate} />
+      <WeeklyProgressBar refreshTasks={refreshTasks} />
 
       <Text style={styles.sectionTitle}>Today's Tasks</Text>
 
@@ -90,6 +92,7 @@ export default function HomeScreen({ refreshTasks }) {
 
       {/* ✅ Sidebar des détails de la tâche */}
       <TaskDetailSidebar visible={sidebarVisible} onClose={closeSidebar} task={selectedTask} onTaskUpdated={fetchTasks} />
+
     </View>
   );
 }
