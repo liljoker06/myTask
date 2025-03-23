@@ -2,7 +2,7 @@ const WeeklyProgress = require("../models/WeeklyProgress");
 const Day = require("../models/Day");
 
 // 🔹 Calculer la progression hebdomadaire
-exports.calculateWeeklyProgress = async (req, res) => {
+const calculateWeeklyProgress = async (req, res) => {
   try {
     const { week_start, week_end } = req.body;
 
@@ -43,7 +43,7 @@ exports.calculateWeeklyProgress = async (req, res) => {
 };
 
 // 🔹 Récupérer la progression hebdomadaire d'un utilisateur
-exports.getWeeklyProgress = async (req, res) => {
+const getWeeklyProgress = async (req, res) => {
   try {
     const weeklyProgress = await WeeklyProgress.find({ user_id: req.user.id }).sort({ week_start: -1 });
 
@@ -52,3 +52,5 @@ exports.getWeeklyProgress = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la récupération de la progression hebdomadaire", error: error.message });
   }
 };
+
+module.exports = { calculateWeeklyProgress, getWeeklyProgress };

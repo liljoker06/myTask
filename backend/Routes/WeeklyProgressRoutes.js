@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const WeeklyProgressController = require("../Controllers/WeeklyProgressController");
+const WeeklyProgressController = require("../Controllers/weeklyController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 // 🔹 Routes protégées (nécessitent un token)

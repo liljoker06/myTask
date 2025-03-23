@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { API_URL } from "@env";
 import { useAuth } from "../context/AuthContext";
-import DatePicker from "./DatePicker"; // 🔹 Import du DatePicker personnalisé
+import { DatePicker } from "./DatePicker";
 
 interface TaskSidebarProps {
   visible: boolean;
@@ -76,8 +76,8 @@ export default function TaskSidebar({ visible, onClose }: TaskSidebarProps) {
               <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={setDescription} multiline />
 
               {/* 🔹 Date Picker Personnalisé */}
-              <DatePicker value={startDate} onChange={setStartDate} label="Start Date"  placeholder="Sélectionner une date et heure"/>
-              <DatePicker value={endDate} onChange={setEndDate} label="End Date"  placeholder="Sélectionner une date et heure"/>
+              <DatePicker value={startDate} onChange={setStartDate}  placeholder="Sélectionner une date et heure"/>
+              <DatePicker value={endDate} onChange={setEndDate}   placeholder="Sélectionner une date et heure"/>
 
               <TouchableOpacity style={styles.addButton} onPress={handleCreateTask}>
                 <Text style={styles.addButtonText}>Create Task</Text>
