@@ -255,3 +255,15 @@
 [2025-03-23T18:07:27.268Z] [INFO] Connexion réussie {
   "userId": "67d9fee5ff31eb140febb1fa"
 }
+[2025-03-23T20:30:09.186Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T20:30:09.189Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T20:30:33.127Z] [INFO] Tentative de connexion {
+  "email": "aladin@gmail.com"
+}
+[2025-03-23T20:30:33.188Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
