@@ -7,6 +7,7 @@ import { Button } from "react-native";
 // Pages
 import HomeScreen from "./app/screens/MainScreen";
 import LoginScreen from "./app/screens/LoginScreen";
+import EditProfileScreen from "./app/screens/EditProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export const Layout = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {authState.authenticated ? (
+        <>
         <Stack.Screen 
           name="Home" 
           component={HomeScreen} 
@@ -38,6 +40,8 @@ export const Layout = () => {
             ),
           }} 
         />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        </>
       ) : (
         <Stack.Screen 
           name="Login" 

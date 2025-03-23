@@ -167,3 +167,85 @@
 [2025-03-19T10:25:52.802Z] [INFO] Connexion réussie {
   "userId": "67da9a88d2d557f3ec43c738"
 }
+[2025-03-23T15:39:55.746Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T15:39:55.761Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T15:40:37.559Z] [INFO] Tentative de connexion {
+  "email": "Joker@gmail.com"
+}
+[2025-03-23T15:40:37.619Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T15:50:46.286Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T15:50:46.288Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T15:51:16.122Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T15:51:16.172Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T16:04:48.869Z] [INFO] Tentative de connexion {
+  "email": "test@example.com"
+}
+[2025-03-23T16:04:48.871Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "test@example.com"
+}
+[2025-03-23T16:04:59.107Z] [INFO] Tentative de connexion {
+  "email": "test@example.com"
+}
+[2025-03-23T16:04:59.109Z] [ERROR] Échec de connexion : utilisateur introuvable {
+  "email": "test@example.com"
+}
+[2025-03-23T16:05:05.613Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T16:05:05.661Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T16:06:59.871Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T16:06:59.927Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T16:11:14.931Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T16:11:14.975Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T16:12:33.625Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T16:12:33.685Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T16:36:46.452Z] [INFO] Tentative d'inscription {
+  "username": "",
+  "email": "",
+  "password": ""
+}
+[2025-03-23T16:36:46.455Z] [ERROR] Données invalides reçues lors de l'inscription {
+  "username": "",
+  "email": "",
+  "password": ""
+}
+[2025-03-23T16:37:00.467Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T16:37:00.518Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
+[2025-03-23T16:47:28.646Z] [INFO] Tentative de connexion {
+  "email": "joker@gmail.com"
+}
+[2025-03-23T16:47:28.697Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
