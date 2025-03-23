@@ -91,8 +91,31 @@ const getme = async (req, res) => {
 
 
 
+const updateProfileasync= async (req, res) => {
+    try {
+      const { username, email, profile_pic } = req.body;
+  
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return res.status(404).json({ message: "Utilisateur non trouvé" });
+      }
+  
+      user.username = username || user.username;
+      user.email = email || user.email;
+      user.profile_pic = profile_pic || user.profile_pic;
+  
+      await user.save();
+  
+      res.status(200).json({ message: "Profil mis à jour", user });
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la mise à jour", error: error.message });
+    }
+  };
+
+
 module.exports = { 
     register,
     login,
-    getme
+    getme,
+    updateProfileasync
 };

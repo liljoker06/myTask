@@ -1,33 +1,54 @@
-# Node.js
+# 🚀 Exclure les dépendances Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Logs
+# 🚀 Exclure les fichiers logs
 logs/
 *.log
 *.log.*
+logs.txt
 
-# Environment variables
+# 🚀 Exclure les variables d'environnement (⚠️ Très important ⚠️)
 .env
+.env.local
+.env.*.local
 
-# Build files
+# 🚀 Exclure les fichiers temporaires et caches
 dist/
 build/
+.cache/
+.tmp/
+.temp/
 
-# Temporary files
-*.tmp
-*.temp
+# 🚀 Exclure les fichiers d'uploads (pour éviter d'envoyer des images/fichiers uploadés)
+uploads/
 
-# IDE/Editor files
+# 🚀 Exclure les fichiers d'éditeur & IDE
 .vscode/
 .idea/
 *.swp
+*.swo
+*.swn
+*.bak
+*.log
+*.pid
+*.seed
+*.pid.lock
 
-# OS-specific files
+# 🚀 Exclure les fichiers spécifiques à l'OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Others
+# 🚀 Exclure les fichiers de tests et de couverture (si tu utilises Jest ou d'autres outils de test)
 coverage/
+jest-cache/
+jest-output/
+
+# 🚀 Exclure les fichiers compressés et archives (évite d'envoyer des backups accidentels)
+*.tar
+*.gz
+*.zip
+*.rar

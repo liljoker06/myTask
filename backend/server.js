@@ -29,5 +29,9 @@ app.listen(port, () => console.log(`Server running on port ${port}`));
 // ROUTES  
 
 const UserRoutes = require('./Routes/UserRoutes');
+const UploadRoutes = require("./Routes/UploadRoutes");
 
+app.use("/uploads", express.static("uploads"));
+
+app.use("/api/upload", UploadRoutes);
 app.use('/api/user', UserRoutes);
