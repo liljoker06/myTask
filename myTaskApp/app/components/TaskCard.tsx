@@ -1,23 +1,22 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 interface TaskCardProps {
   title: string;
   description: string;
   status: string;
+  onPress: () => void; 
 }
 
-export default function TaskCard({ title, description, status }: TaskCardProps) {
+export default function TaskCard({ title, description, status, onPress }: TaskCardProps) {
   // 📌 Limiter la description à 50 caractères max
   const shortDescription = description.length > 50 ? description.substring(0, 50) + "..." : description;
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={onPress} style={styles.card}> 
       <View style={styles.cardContent}>
-        {/* ✅ Titre de la tâche */}
         <Text style={styles.title}>{title}</Text>
         
-        {/* ✅ Début de la description */}
         <Text style={styles.description}>{shortDescription}</Text>
       </View>
 
@@ -25,11 +24,10 @@ export default function TaskCard({ title, description, status }: TaskCardProps) 
       <View style={[styles.statusBadge, getStatusStyle(status)]}>
         <Text style={styles.statusText}>{status}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
-// 🎨 Fonction pour changer la couleur du badge selon le statut
 const getStatusStyle = (status: string) => {
   switch (status) {
     case "Not started":
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
   statusBadge: {
     paddingVertical: 5,
     paddingHorizontal: 12,
-    borderRadius: 15, // ✅ Arrondi comme sur l'image
+    borderRadius: 15, 
     alignSelf: "center",
   },
   statusText: {
@@ -84,4 +82,3 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
   },
 });
-

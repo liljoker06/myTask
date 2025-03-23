@@ -273,3 +273,9 @@
 [2025-03-23T21:00:44.104Z] [INFO] Connexion réussie {
   "userId": "67d9fee5ff31eb140febb1fa"
 }
+[2025-03-23T21:53:29.314Z] [INFO] Tentative de connexion {
+  "email": "aladin@gmail.com"
+}
+[2025-03-23T21:53:29.370Z] [INFO] Connexion réussie {
+  "userId": "67d9fee5ff31eb140febb1fa"
+}
