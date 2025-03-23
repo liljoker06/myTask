@@ -17,7 +17,7 @@ export default function TabNavigator() {
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const [refreshTasks, setRefreshTasks] = useState(false);
 
-    // ✅ Fonction pour forcer le rafraîchissement des tâches dans HomeScreen
+
     const handleTaskCreated = () => {
         setRefreshTasks(prev => !prev); 
         setSidebarVisible(false); 

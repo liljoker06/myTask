@@ -2,16 +2,19 @@ const WeeklyProgress = require("../models/WeeklyProgress");
 const Task = require("../models/Task");
 const { startOfWeek, endOfWeek } = require("date-fns");
 
-// ✅ Fonction pour recalculer la progression hebdomadaire d'un utilisateur
+// 🔹 Calculer la progression hebdomadaire
 const calculateWeeklyProgress = async (userId) => {
   try {
     const startWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
     const endWeek = endOfWeek(new Date(), { weekStartsOn: 1 });
 
-    // 📌 Récupérer toutes les tâches de la semaine
+    // 📌 Récupérer toutes les tâches qui sont actives cette semaine (début OU fin dans la semaine)
     const weeklyTasks = await Task.find({
       user_id: userId,
-      start_date: { $gte: startWeek, $lte: endWeek },
+      $or: [
+        { start_date: { $gte: startWeek, $lte: endWeek } },
+        { end_date: { $gte: startWeek, $lte: endWeek } },
+      ],
     });
 
     const completedTasks = weeklyTasks.filter((task) => task.status === "Completed").length;
@@ -29,6 +32,7 @@ const calculateWeeklyProgress = async (userId) => {
     console.error("❌ Erreur lors du calcul de la progression hebdomadaire", error);
   }
 };
+
 
 // 🔹 Récupérer la progression hebdomadaire actuelle
 const getWeeklyProgress = async (req, res) => {

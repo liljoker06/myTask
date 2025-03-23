@@ -11,11 +11,27 @@ export default function WeeklyProgressBar({ refreshTasks }) {
 
   const fetchWeeklyProgress = async () => {
     try {
-      const response = await axios.get(`${API_URL}/weekly-progress/`, {
+      console.log("📡 Fetching weekly progress..."); // ✅ Debug
+
+      // 1️⃣ On récupère TOUTES les tâches de la semaine
+      const responseTasks = await axios.get(`${API_URL}/task/`, {
         headers: { Authorization: `Bearer ${authState.token}` },
       });
 
-      setProgress(response.data.progress / 100); // ✅ Convertir en format 0 à 1 pour ProgressBar
+      // 2️⃣ On récupère la progression depuis l'API
+      const responseProgress = await axios.get(`${API_URL}/weekly-progress/`, {
+        headers: { Authorization: `Bearer ${authState.token}` },
+      });
+
+      // 3️⃣ Calculer la nouvelle progression avec les nouvelles tâches
+      const weeklyTasks = responseTasks.data.filter(task => task.status !== "Deleted");
+      const completedTasks = weeklyTasks.filter(task => task.status === "Completed");
+
+      // 4️⃣ Calculer la progression et l'afficher
+      const progressPercentage = weeklyTasks.length > 0 ? completedTasks.length / weeklyTasks.length : 0;
+      console.log(`📊 Calcul Progression: ${Math.round(progressPercentage * 100)}%`);
+
+      setProgress(progressPercentage);
     } catch (error) {
       console.error("❌ Erreur lors du chargement de la progression hebdomadaire", error);
     }
