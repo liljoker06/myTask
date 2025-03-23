@@ -36,7 +36,7 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       {/* Profil */}
       <View style={styles.profileContainer}>
-        <Image source={{ uri: user?.profilePic || "https://i.postimg.cc/g0Jb3QbC/307ce493-b254-4b2d-8ba4-d12c080d6651.jpg" }} style={styles.profileImage} />
+        <Image source={{ uri: user?.profile_pic || "https://i.postimg.cc/g0Jb3QbC/307ce493-b254-4b2d-8ba4-d12c080d6651.jpg" }} style={styles.profileImage} />
         <Text style={styles.name}>{user?.username || "Loading..."}</Text>
         <Text style={styles.email}>{user?.email || "No email available"}</Text>
 

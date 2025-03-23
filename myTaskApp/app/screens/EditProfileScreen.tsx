@@ -8,13 +8,15 @@ import { API_URL } from "@env";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function EditProfileScreen() {
-  const { user, authState } = useAuth();
+  const { user, authState, setUser } = useAuth();
   const navigation = useNavigation();
 
   const [username, setUsername] = useState(user?.username || "");
   const [email, setEmail] = useState(user?.email || "");
   const [profile_pic, setProfile_pic] = useState(user?.profile_pic || "https://i.postimg.cc/g0Jb3QbC/307ce493-b254-4b2d-8ba4-d12c080d6651.jpg");
   const [loading, setLoading] = useState(false);
+
+  
 
   // 🔹 Sélectionner une image depuis la galerie
   const pickImage = async () => {
@@ -36,7 +38,6 @@ export default function EditProfileScreen() {
     }
   };
 
-  // 🔹 Upload de l'image et mise à jour du profil
   const handleSave = async () => {
     try {
       setLoading(true);
@@ -68,13 +69,16 @@ export default function EditProfileScreen() {
       }
 
       // 🔹 Envoyer les nouvelles informations à l'API
-      await axios.put(
+      const response = await axios.put(
         `${API_URL}/user/update`,
         { username, email, profile_pic: imageUrl },
         {
           headers: { Authorization: `Bearer ${authState.token}` }, // Envoi du token
         }
       );
+
+      // ✅ Mettre à jour l'utilisateur localement sans nécessiter de déconnexion
+      setUser(response.data.user); 
 
       Alert.alert("Succès", "Profil mis à jour avec succès !");
       navigation.goBack();
@@ -84,7 +88,7 @@ export default function EditProfileScreen() {
     } finally {
       setLoading(false);
     }
-  };
+};
 
   return (
     <View style={styles.container}>

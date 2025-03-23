@@ -14,6 +14,7 @@ interface User {
 interface AuthProps {
     authState: { token: string | null; authenticated: boolean | null };
     user: User | null;
+    setUser: (user: User) => void;
     onRegister: (email: string, password: string, username: string) => Promise<any>;
     onLogin: (email: string, password: string) => Promise<any>;
     onLogout: () => Promise<void>;
@@ -107,6 +108,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const value: AuthProps = {
         authState,
         user,
+        setUser,
         onRegister: register,
         onLogin: login,
         onLogout: logout,

@@ -102,7 +102,7 @@ const updateProfile = async (req, res) => {
   
       user.username = username || user.username;
       user.email = email || user.email;
-      user.profilePic = profilePic || user.profile_pic;
+      user.profile_pic = profile_pic || user.profile_pic;
   
       await user.save();
   
@@ -117,5 +117,5 @@ module.exports = {
     register,
     login,
     getme,
-    updateProfileasync
+    updateProfile
 };
