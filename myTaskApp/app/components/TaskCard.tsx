@@ -1,58 +1,87 @@
-// TaskCard.tsx
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 interface TaskCardProps {
   title: string;
-  status: 'In Progress' | 'Completed' | 'Pending';
+  description: string;
+  status: string;
 }
 
-export default function TaskCard({ title, status }: TaskCardProps) {
-  const getStatusStyles = (status: string) => {
-    switch (status) {
-      case 'Completed':
-        return { backgroundColor: '#4CAF50', textColor: '#fff' };
-      case 'In Progress':
-        return { backgroundColor: '#FF9800', textColor: '#fff' };
-      case 'Pending':
-        return { backgroundColor: '#F44336', textColor: '#fff' };
-      default:
-        return { backgroundColor: '#f0f0f0', textColor: '#000' };
-    }
-  };
-
-  const { backgroundColor, textColor } = getStatusStyles(status);
+export default function TaskCard({ title, description, status }: TaskCardProps) {
+  // 📌 Limiter la description à 50 caractères max
+  const shortDescription = description.length > 50 ? description.substring(0, 50) + "..." : description;
 
   return (
-    <View style={[styles.cardContainer, { backgroundColor }]}>
-      <Text style={[styles.cardTitle, { color: textColor }]}>{title}</Text>
-      <Text style={[styles.cardStatus, { color: textColor }]}>{status}</Text>
+    <View style={styles.card}>
+      <View style={styles.cardContent}>
+        {/* ✅ Titre de la tâche */}
+        <Text style={styles.title}>{title}</Text>
+        
+        {/* ✅ Début de la description */}
+        <Text style={styles.description}>{shortDescription}</Text>
+      </View>
+
+      {/* 📌 Badge de statut (In Progress, Completed...) */}
+      <View style={[styles.statusBadge, getStatusStyle(status)]}>
+        <Text style={styles.statusText}>{status}</Text>
+      </View>
     </View>
   );
 }
 
+// 🎨 Fonction pour changer la couleur du badge selon le statut
+const getStatusStyle = (status: string) => {
+  switch (status) {
+    case "Not started":
+      return { backgroundColor: "#FFD700" }; // Jaune
+    case "In progress":
+      return { backgroundColor: "#FFA500" }; // Orange
+    case "Completed":
+      return { backgroundColor: "#4CAF50" }; // Vert
+    default:
+      return { backgroundColor: "#D3D3D3" }; // Gris clair
+  }
+};
+
 const styles = StyleSheet.create({
-  cardContainer: {
+  card: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
     padding: 15,
-    marginVertical: 8,
     borderRadius: 10,
-    width: '90%',
-    alignSelf: 'center',
-    borderWidth: 2,
-    borderColor: '#ddd',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    marginBottom: 10,
+    shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
     elevation: 3,
   },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
+  cardContent: {
+    flex: 1, // Prend tout l'espace sauf le badge
   },
-  cardStatus: {
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  description: {
     fontSize: 14,
-    fontWeight: '600',
+    color: "#666",
+    marginTop: 5,
+  },
+  statusBadge: {
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: 15, // ✅ Arrondi comme sur l'image
+    alignSelf: "center",
+  },
+  statusText: {
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: "bold",
+    textTransform: "capitalize",
   },
 });
+

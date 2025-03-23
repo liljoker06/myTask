@@ -1,48 +1,72 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import DateDisplay from '../components/DateDisplay'; // Importer le composant DateDisplay
-import TaskCard from '../components/TaskCard'; // Importer le composant TaskCard
-import TaskSummary from '../components/TaskSummary'; // Importer le composant TaskSummary
+import React, { useEffect, useState } from "react";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
+import Header from "../components/Header"; // ✅ Header avec la photo et le username
+import DateDisplay from "../components/DateDisplay"; // ✅ Affichage de la date du jour
+import TaskCard from "../components/TaskCard"; // ✅ Composant d'affichage des tâches
+import axios from "axios";
+import { API_URL } from "@env";
+import { useAuth } from "../context/AuthContext";
+import { format } from "date-fns";
 
 export default function HomeScreen() {
-  const tasks = [
-    { id: 1, title: 'Complete React Native Tutorial', status: 'In Progress' },
-    { id: 2, title: 'Finish Homework', status: 'Completed' },
-    { id: 3, title: 'Buy Groceries', status: 'Pending' },
-  ];
+  const { authState } = useAuth();
+  const [tasks, setTasks] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date()); // Date actuelle
 
-  const taskSummary = [
-    { title: 'Done', count: 22, color: '#4CAF50' },
-    { title: 'In Progress', count: 7, color: '#FF9800' },
-    { title: 'Ongoing', count: 12, color: '#F44336' },
-    { title: 'Waiting For Review', count: 14, color: '#2196F3' },
-  ];
+  // 🔥 Charger les tâches en cours de la journée actuelle
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/task/`, {
+          headers: { Authorization: `Bearer ${authState.token}` },
+        });
+
+        // 📌 Filtrer les tâches qui sont en cours aujourd'hui
+        const todayTasks = response.data.filter((task) => {
+          const startDate = new Date(task.start_date);
+          const endDate = new Date(task.end_date);
+          const formattedToday = format(currentDate, "yyyy-MM-dd"); // Date du jour au format "2025-03-24"
+          const formattedStartDate = format(startDate, "yyyy-MM-dd");
+          const formattedEndDate = format(endDate, "yyyy-MM-dd");
+
+          return formattedStartDate <= formattedToday && formattedEndDate >= formattedToday;
+        });
+
+        setTasks(todayTasks);
+      } catch (error) {
+        console.error("❌ Erreur lors du chargement des tâches", error);
+      }
+    };
+
+    fetchTasks();
+  }, [currentDate]); // ⚡ Relancer la requête si la date change
 
   return (
     <View style={styles.container}>
-      {/* Afficher la date dynamique */}
-      <View style={styles.dateContainer}>
-        <DateDisplay />
-      </View>
+      {/* ✅ Header avec la photo de profil et username */}
+      <Header />
 
-      {/* Afficher la liste des tâches */}
+      {/* ✅ Affichage de la date */}
+      <DateDisplay onDateChange={setCurrentDate} />
+
+      <Text style={styles.sectionTitle}>Today's Tasks</Text>
+
+      {/* ✅ Liste des tâches du jour */}
       <ScrollView contentContainerStyle={styles.taskList}>
-        {tasks.map((task) => (
-          <TaskCard key={task.id} title={task.title} status={task.status} />
-        ))}
-      </ScrollView>
+  {tasks.length > 0 ? (
+    tasks.map((task) => (
+      <TaskCard 
+        key={task._id} 
+        title={task.title} 
+        description={task.description}
+        status={task.status} 
+      />
+    ))
+  ) : (
+    <Text style={styles.noTaskText}>No tasks for today 🚀</Text>
+  )}
+</ScrollView>
 
-      {/* Afficher le résumé des tâches */}
-      <View style={styles.summaryContainer}>
-        {taskSummary.map((summary, index) => (
-          <TaskSummary
-            key={index}
-            title={summary.title}
-            count={summary.count}
-            color={summary.color}
-          />
-        ))}
-      </View>
     </View>
   );
 }
@@ -50,23 +74,24 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
     paddingHorizontal: 10,
+    backgroundColor: "#F5F5F5",
   },
-  dateContainer: {
-    marginTop: 20, // Ajoute un peu d'espace au-dessus pour la date
-    marginBottom: 20, // Espacement entre la date et la liste des tâches
-    width: '100%',
-    alignItems: 'center',
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+    marginVertical: 10,
+    textAlign: "center",
   },
   taskList: {
-    width: '100%',
-    marginVertical: 20,
+    width: "100%",
+    paddingBottom: 20,
   },
-  summaryContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+  noTaskText: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#999",
+    marginTop: 20,
   },
 });
