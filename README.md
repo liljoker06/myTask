@@ -1,41 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>README - Projet Tâches</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            color: #00008B;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 5px;
-            border-radius: 5px;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        .highlight {
-            background: yellow;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <h1>📖 Description</h1>
-    <p>Ce projet est une application mobile développée avec <strong>React Native (Expo)</strong> et un backend en <strong>Node.js avec Express</strong>. Il permet aux utilisateurs de gérer leurs tâches, de suivre leur progression hebdomadaire et de mettre à jour leur statut en temps réel.</p>
-    
-    <h2>📂 Structure du projet</h2>
-    <pre>
+# 📖 Description
+
+Ce projet est une application mobile d'agenda et gestion de tâches développée avec **React Native (Expo)** pour le front-end et **Node.js avec Express** pour le back-end.
+
+Il permet aux utilisateurs de **gérer leurs tâches**, de **suivre leur progression hebdomadaire** et de **mettre à jour leur statut en temps réel**.
+
+---
+
+## 📂 Structure du projet
+
+```
 📦 project-root
  ┣ 📂 backend        # API backend en Node.js
  ┃ ┣ 📂 models      # Modèles Mongoose pour MongoDB
@@ -57,100 +30,125 @@
  ┃ ┗ 📜 package.json # Dépendances frontend
  ┃
  ┗ 📜 README.md      # Documentation du projet
-    </pre>
-    
-    <h2>🚀 Installation et lancement</h2>
-    <h3>1️⃣ Prérequis</h3>
-    <ul>
-        <li>Node.js (≥ 16.x) : <a href="https://nodejs.org/">Télécharger Node.js</a></li>
-        <li>Expo CLI : <code>npm install -g expo-cli</code></li>
-        <li>MongoDB (local ou MongoDB Atlas)</li>
-    </ul>
-    
-    <h3>2️⃣ Backend - Installation et démarrage</h3>
-    <pre>
-📍 Se déplacer dans le dossier backend :
+```
+
+---
+
+## 🚀 Installation et lancement
+
+### 1️⃣ Prérequis
+Avant de commencer, assure-toi d'avoir installé :
+
+- **Node.js (≥ 16.x)** → [Télécharger Node.js](https://nodejs.org/)
+- **Expo CLI** → Installer avec :
+  ```sh
+  npm install -g expo-cli
+  ```
+- **MongoDB** (local ou [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+- **L'application Expo Go** sur ton téléphone 📱
+
+---
+
+### 2️⃣ Backend - Installation et démarrage
+
+📍 **Se déplacer dans le dossier backend** :
+```sh
 cd backend
+```
 
-📍 Installer les dépendances :
+📍 **Installer les dépendances** :
+```sh
 npm install
+```
 
-📍 Créer un fichier .env :
+📍 **Créer un fichier `.env`** :
+```sh
 touch .env
-
-📍 Ajouter les variables d'environnement :
+```
+📍 **Remplir le fichier `.env`** :
+```env
 PORT=5000
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
 JWT_SECRET=your_secret_key
-
-📍 Lancer le serveur :
+```
+📍 **Lancer le serveur** :
+```sh
 node server.js
+```
+✅ **Réponse attendue** : `Server running on port 5000`
 
-📍 Réponse attendue :
-Server running on port 5000
-    </pre>
-    
-    <h3>3️⃣ Frontend - Installation et démarrage</h3>
-    <pre>
-📍 Se déplacer dans le dossier frontend :
+---
+
+### 3️⃣ Frontend - Installation et démarrage
+
+📍 **Se déplacer dans le dossier frontend** :
+```sh
 cd ../frontend
+```
 
-📍 Installer les dépendances :
+📍 **Installer les dépendances** :
+```sh
 npm install
-    </pre>
-    
-    <h3>📍 Configurer l'URL de l'API dans .env</h3>
-    <p>Récupérer l'adresse IP locale de ton PC :</p>
-    <ul>
-        <li><strong>Windows :</strong> Ouvre un terminal CMD et tape la commande : <code>ipconfig</code></li>
-        <li><strong>Mac/Linux :</strong> Ouvre un terminal et tape la commande : <code>ifconfig | grep "inet " | grep -v 127.0.0.1</code></li>
-    </ul>
-    <p>Modifier <code>.env</code> avec cette IP :</p>
-    <pre>
+```
+
+📍 **Configurer l'URL de l'API dans `.env`** :
+
+🔍 **Trouver l'adresse IP locale de ton PC**
+
+👉 **Sur Windows** :
+```sh
+ipconfig
+```
+👉 **Sur Mac/Linux** :
+```sh
+ifconfig | grep "inet " | grep -v 127.0.0.1
+```
+📍 **Modifier `.env` avec cette IP** :
+```env
 API_URL=http://192.168.x.x:5000/api
-    </pre>
-    <p class="highlight">⚠️ Remplace <code>192.168.x.x</code> par ton IPv4 !</p>
-    
-    <h3>📍 Lancer l'application mobile :</h3>
-    <pre>
+```
+⚠️ **Remplace `192.168.x.x` par ton IPv4 !** ⚠️
+
+📍 **Lancer l'application mobile** :
+```sh
 npx expo start
-    </pre>
-    <p>Un QR code s'affichera. Scanne-le avec l'application <strong>Expo Go</strong> sur ton téléphone 📱.</p>
-    
-    <h2>📌 Utilisation</h2>
-    <ol>
-        <li>Créer un compte ou se connecter</li>
-        <li>Ajouter des tâches et suivre leur progression</li>
-        <li>Changer le statut des tâches et voir la progression hebdomadaire mise à jour automatiquement</li>
-    </ol>
-    
-    <h2>🛠 Technologies utilisées</h2>
-    <h3>Backend</h3>
-    <ul>
-        <li>Node.js avec Express.js</li>
-        <li>MongoDB avec Mongoose</li>
-        <li>JWT (JSON Web Token) pour l’authentification</li>
-        <li>Cron jobs pour la mise à jour automatique de la progression hebdomadaire</li>
-    </ul>
-    
-    <h3>Frontend</h3>
-    <ul>
-        <li>React Native avec Expo</li>
-        <li>React Navigation pour la navigation entre les écrans</li>
-        <li>Axios pour les appels API</li>
-        <li>Context API pour la gestion de l’état global</li>
-        <li>React Native Paper pour les composants UI</li>
-    </ul>
-    
-    <h2>🚀 Fonctionnalités</h2>
-    <ul>
-        <li>✅ Système de gestion de tâches : Ajouter, modifier, supprimer des tâches</li>
-        <li>✅ Suivi de la progression : Barre de progression hebdomadaire mise à jour dynamiquement</li>
-        <li>✅ Mise à jour automatique : Un cron job met à jour le statut des tâches chaque jour</li>
-        <li>✅ Interface moderne : Utilisation de React Native Paper pour une UI fluide</li>
-        <li>✅ Stockage des utilisateurs : Authentification via JWT</li>
-    </ul>
-    
-    <h2>🔥 Maintenant, tout est prêt pour démarrer ton projet ! 🚀</h2>
-</body>
-</html>
+```
+✅ **Scanner le QR code** avec **Expo Go** sur ton téléphone 📱.
+
+---
+
+## 📌 Utilisation
+
+1. **Créer un compte** ou **se connecter** 🔑
+2. **Ajouter des tâches** et **suivre leur progression** 📊
+3. **Changer le statut des tâches** et voir la **progression hebdomadaire** mise à jour automatiquement ✅
+
+---
+
+## 🛠 Technologies utilisées
+
+### **Backend**
+- **Node.js** avec **Express.js**
+- **MongoDB** avec **Mongoose**
+- **JWT (JSON Web Token)** pour l’authentification
+- **Cron jobs** pour la mise à jour automatique de la progression hebdomadaire
+
+### **Frontend**
+- **React Native** avec **Expo**
+- **React Navigation** pour la navigation entre les écrans
+- **Axios** pour les appels API
+- **Context API** pour la gestion de l’état global
+- **React Native Paper** pour les composants UI
+
+---
+
+## 🚀 Fonctionnalités
+
+✅ **Système de gestion de tâches** : Ajouter, modifier, supprimer des tâches 📝
+✅ **Suivi de la progression** : Barre de progression hebdomadaire mise à jour dynamiquement 📊
+✅ **Mise à jour automatique** : Un cron job met à jour le statut des tâches chaque jour ⏳
+✅ **Interface moderne** : Utilisation de **React Native Paper** pour une UI fluide 🎨
+✅ **Stockage des utilisateurs** : Authentification sécurisée via JWT 🔐
+
+🔥 **Maintenant, tout est prêt pour démarrer ton projet ! 🚀**
+
