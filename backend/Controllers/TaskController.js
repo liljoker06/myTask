@@ -2,7 +2,9 @@ const Task = require("../models/Task");
 const Day = require("../models/Day");
 
 // 🔹 Créer une nouvelle tâche
-exports.createTask = async (req, res) => {
+const createTask = async (req, res) => {
+
+  console.log('je rentre dans le try ')
   try {
     const { title, description, start_date, end_date, duration } = req.body;
 
@@ -15,7 +17,10 @@ exports.createTask = async (req, res) => {
       duration,
     });
 
+    console.log('createTask creation en cours.... ');
+
     await newTask.save();
+    console.log('createTask creation terminée.... ');
     res.status(201).json({ message: "Tâche créée avec succès", task: newTask });
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la création de la tâche", error: error.message });
@@ -23,7 +28,7 @@ exports.createTask = async (req, res) => {
 };
 
 // 🔹 Récupérer toutes les tâches d'un utilisateur
-exports.getTasks = async (req, res) => {
+const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user_id: req.user.id }).sort({ start_date: 1 });
     res.status(200).json(tasks);
@@ -33,7 +38,7 @@ exports.getTasks = async (req, res) => {
 };
 
 // 🔹 Mettre à jour une tâche
-exports.updateTask = async (req, res) => {
+const updateTask = async (req, res) => {
   try {
     const { title, description, start_date, end_date, duration, status } = req.body;
     const task = await Task.findOneAndUpdate(
@@ -51,7 +56,7 @@ exports.updateTask = async (req, res) => {
 };
 
 // 🔹 Supprimer une tâche
-exports.deleteTask = async (req, res) => {
+const deleteTask = async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({ _id: req.params.id, user_id: req.user.id });
 
@@ -62,3 +67,6 @@ exports.deleteTask = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la suppression de la tâche", error: error.message });
   }
 };
+
+
+module.exports = { createTask, updateTask, deleteTask, getTasks };

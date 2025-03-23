@@ -7,7 +7,11 @@ const taskSchema = new mongoose.Schema({
   start_date: { type: Date, required: true },
   end_date: { type: Date, required: true },
   duration: { type: Number, required: true },
-  status: { type: String, enum: ['non commencée', 'en cours', 'terminée'], default: 'non commencée' },
+  status: { 
+    type: String, 
+    enum: ['Not started', 'In progress', 'Completed'], 
+    default: 'Not started' 
+  },
 }, { timestamps: true });
 
 const Task = mongoose.model('Task', taskSchema);
