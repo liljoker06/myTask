@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 
-
-
-// Importer les écrans pour chaque onglet
+// Importer les écrans
 import HomeScreen from '../screens/HomeScreen';
 import UncomingScreen from '../screens/UncomingScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-// Créer le Tab
+// Importer la TaskSidebar
+import TaskSidebar from '../components/TaskSidebar'; // Assure-toi que le chemin est correct
+
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+    const [sidebarVisible, setSidebarVisible] = useState(false);
+
     return (
         <View style={{ flex: 1 }}>
             <Tab.Navigator
@@ -24,9 +26,9 @@ export default function TabNavigator() {
                     tabBarStyle: {
                         height: 80,
                         paddingBottom: 10,
-                        borderTopWidth: 0,  // Suppression du bord supérieur
-                        position: 'relative',  // Assurer la position relative de la navbar
-                        zIndex: 0,  // Pour être derrière le bouton "+" flottant
+                        borderTopWidth: 0,
+                        position: 'relative',
+                        zIndex: 0,
                     },
                 }}
             >
@@ -63,9 +65,12 @@ export default function TabNavigator() {
             </Tab.Navigator>
 
             {/* Bouton + flottant */}
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity style={styles.addButton} onPress={() => setSidebarVisible(true)}>
                 <Ionicons name="add-outline" color="#fff" size={30} />
             </TouchableOpacity>
+
+            {/* Sidebar pour créer une tâche */}
+            <TaskSidebar visible={sidebarVisible} onClose={() => setSidebarVisible(false)} />
         </View>
     );
 }
@@ -73,15 +78,15 @@ export default function TabNavigator() {
 const styles = StyleSheet.create({
     addButton: {
         position: 'absolute',
-        bottom: 90,  // Distance au-dessus de la navbar
+        bottom: 90, 
         left: '90%',
-        transform: [{ translateX: -30 }],  // Centrer le bouton horizontalement
+        transform: [{ translateX: -30 }],  
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#00008B',
         borderRadius: 50,
         height: 60,
         width: 60,
-        zIndex: 1,  // Assure que le bouton est au-dessus de la navbar
+        zIndex: 1,
     },
 });

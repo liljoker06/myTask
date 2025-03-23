@@ -30,8 +30,14 @@ app.listen(port, () => console.log(`Server running on port ${port}`));
 
 const UserRoutes = require('./Routes/UserRoutes');
 const UploadRoutes = require("./Routes/UploadRoutes");
+const TaskRoutes = require("./Routes/TaskRoutes");
+const DayRoutes = require("./Routes/DayRoutes");
+const WeeklyProgressRoutes = require("./Routes/WeeklyProgressRoutes");
 
 app.use("/uploads", express.static("uploads"));
 
 app.use("/api/upload", UploadRoutes);
 app.use('/api/user', UserRoutes);
+app.use('/api/task', TaskRoutes);
+app.use("/api/day", DayRoutes);
+app.use("/api/weekly-progress", WeeklyProgressRoutes);
