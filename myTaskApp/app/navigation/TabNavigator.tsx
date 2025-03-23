@@ -49,7 +49,7 @@ export default function TabNavigator() {
                         headerShown: false,
                     }}
                 />
-                <Tab.Screen
+                {/* <Tab.Screen
                     name="Explore"
                     component={UncomingScreen}
                     options={{
@@ -58,7 +58,7 @@ export default function TabNavigator() {
                         ),
                         headerShown: false,
                     }}
-                />
+                /> */}
                 <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
