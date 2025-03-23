@@ -9,7 +9,7 @@ import { API_URL } from "@env";
 import { useAuth } from "../context/AuthContext";
 import { format } from "date-fns";
 
-export default function HomeScreen() {
+export default function HomeScreen({ refreshTasks }) {
   const { authState } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -48,7 +48,7 @@ export default function HomeScreen() {
   // ✅ Appeler fetchTasks() au chargement du composant et quand la date change
   useEffect(() => {
     fetchTasks();
-  }, [currentDate]); // ✅ Recharge les tâches quand la date change
+  }, [currentDate, refreshTasks]); // ✅ Recharge les tâches quand la date change
 
   // ✅ Ouvrir la Sidebar
   const openSidebar = (task) => {
@@ -60,6 +60,7 @@ export default function HomeScreen() {
   const closeSidebar = () => {
     setSidebarVisible(false);
     setSelectedTask(null);
+    fetchTasks();
   };
 
   return (
@@ -88,7 +89,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       {/* ✅ Sidebar des détails de la tâche */}
-      <TaskDetailSidebar visible={sidebarVisible} onClose={closeSidebar} task={selectedTask} />
+      <TaskDetailSidebar visible={sidebarVisible} onClose={closeSidebar} task={selectedTask} onTaskUpdated={fetchTasks} />
     </View>
   );
 }

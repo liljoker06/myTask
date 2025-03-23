@@ -23,7 +23,7 @@ interface TaskDetailSidebarProps {
     end_date: string;
     status: string;
   } | null;
-  onTaskUpdated: () => void; // ✅ Ajout d'un callback pour actualiser les tâches
+  onTaskUpdated: () => void; 
 }
 
 export default function TaskDetailSidebar({ visible, onClose, task, onTaskUpdated }: TaskDetailSidebarProps) {
@@ -48,17 +48,17 @@ export default function TaskDetailSidebar({ visible, onClose, task, onTaskUpdate
   // ✅ Fonction pour marquer la tâche comme terminée
   const markAsCompleted = async () => {
     if (!task) return;
-
+  
     try {
-      console.log("📌 Marquer la tâche comme terminée :", task._id);
-      
-      await axios.patch(`${API_URL}/task/${task._id}`, { status: "Completed" });
-
-      console.log("✅ Tâche mise à jour avec succès !");
-      onTaskUpdated(); // ✅ Mise à jour de la liste des tâches après modification
-      onClose(); // ✅ Fermer la sidebar après mise à jour
+      console.log("📌 Mise à jour du statut de la tâche :", task._id);
+  
+      await axios.patch(`${API_URL}/task/${task._id}/status`, { status: "Completed" });
+  
+      console.log("✅ Tâche marquée comme terminée !");
+      onTaskUpdated(); 
+      onClose(); 
     } catch (error) {
-      console.error("❌ Erreur lors de la mise à jour de la tâche :", error);
+      console.error("❌ Erreur lors de la mise à jour du statut :", error);
     }
   };
 

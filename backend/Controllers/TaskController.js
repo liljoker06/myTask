@@ -55,6 +55,24 @@ const updateTask = async (req, res) => {
   }
 };
 
+
+const updateTaskStatus = async (req, res) => {
+  try {
+    const { status } = req.body; // ✅ On récupère uniquement le statut
+    const task = await Task.findOneAndUpdate(
+      { _id: req.params.id, user_id: req.user.id },
+      { status }, // ✅ On met à jour uniquement le statut
+      { new: true }
+    );
+
+    if (!task) return res.status(404).json({ message: "Tâche non trouvée" });
+
+    res.status(200).json({ message: "Tâche mise à jour", task });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la mise à jour de la tâche", error: error.message });
+  }
+};
+
 // 🔹 Supprimer une tâche
 const deleteTask = async (req, res) => {
   try {
@@ -69,4 +87,4 @@ const deleteTask = async (req, res) => {
 };
 
 
-module.exports = { createTask, updateTask, deleteTask, getTasks };
+module.exports = { createTask, updateTask, deleteTask, getTasks, updateTaskStatus };

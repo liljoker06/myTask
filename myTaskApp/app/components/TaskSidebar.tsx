@@ -21,9 +21,11 @@ import { DatePicker } from "./DatePicker";
 interface TaskSidebarProps {
   visible: boolean;
   onClose: () => void;
+  onTaskCreated: () => void;
+
 }
 
-export default function TaskSidebar({ visible, onClose }: TaskSidebarProps) {
+export default function TaskSidebar({ visible, onClose, onTaskCreated  }: TaskSidebarProps) {
   const { authState } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -66,22 +68,24 @@ export default function TaskSidebar({ visible, onClose }: TaskSidebarProps) {
     try {
       await axios.post(
         `${API_URL}/task/create`,
-        { title, description, start_date: startDate, end_date: endDate, duration, status: determineStatus() },
+        { title, description, start_date: startDate, end_date: endDate, duration, status: determineStatus() }, 
         { headers: { Authorization: `Bearer ${authState.token}` } }
       );
-
+  
+      // ✅ Réinitialiser les champs après l'ajout
       setTitle("");
       setDescription("");
       setStartDate(new Date());
       setEndDate(new Date());
       setDuration(0);
-
-      
-      onClose();
+  
+      onTaskCreated(); // ✅ Rafraîchir la liste après l'ajout
+      onClose(); // ✅ Fermer la sidebar
     } catch (error) {
       console.error("Error creating task:", error);
     }
   };
+  
 
   return (
     <Modal transparent visible={visible} animationType="slide">

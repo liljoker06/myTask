@@ -15,6 +15,13 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
     const [sidebarVisible, setSidebarVisible] = useState(false);
+    const [refreshTasks, setRefreshTasks] = useState(false);
+
+    // ✅ Fonction pour forcer le rafraîchissement des tâches dans HomeScreen
+    const handleTaskCreated = () => {
+        setRefreshTasks(prev => !prev); 
+        setSidebarVisible(false); 
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -34,7 +41,7 @@ export default function TabNavigator() {
             >
                 <Tab.Screen
                     name="Home"
-                    component={HomeScreen}
+                    children={() => <HomeScreen refreshTasks={refreshTasks} />}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                             <Ionicons name="home-outline" color={color} size={size} />
@@ -70,7 +77,7 @@ export default function TabNavigator() {
             </TouchableOpacity>
 
             {/* Sidebar pour créer une tâche */}
-            <TaskSidebar visible={sidebarVisible} onClose={() => setSidebarVisible(false)} />
+            <TaskSidebar visible={sidebarVisible} onTaskCreated={handleTaskCreated} onClose={() => setSidebarVisible(false)} />
         </View>
     );
 }
