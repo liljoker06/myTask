@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -31,6 +31,14 @@ export function DatePicker({
   placeholder = 'Sélectionner une date',
 }: DatePickerProps) {
   const today = new Date();
+
+  // Références pour le scroll automatique
+  const yearRef = useRef<ScrollView>(null);
+  const monthRef = useRef<ScrollView>(null);
+  const dayRef = useRef<ScrollView>(null);
+  const hourRef = useRef<ScrollView>(null);
+  const minuteRef = useRef<ScrollView>(null);
+
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<'date' | 'time'>('date');
   const [tempDate, setTempDate] = useState(value || today);
@@ -43,10 +51,11 @@ export function DatePicker({
   }, [value]);
 
   const openModal = useCallback(() => {
+    setTempDate(value || today);
     setIsOpen(true);
     translateY.value = withSpring(0);
     opacity.value = withTiming(1);
-  }, []);
+  }, [value]);
 
   const closeModal = useCallback(() => {
     translateY.value = withSpring(500);
@@ -64,6 +73,7 @@ export function DatePicker({
     }
   };
 
+  // Animation de l'overlay et du modal
   const overlayStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
   }));
@@ -72,6 +82,7 @@ export function DatePicker({
     transform: [{ translateY: translateY.value }],
   }));
 
+  // Options pour le choix des dates et heures
   const years = Array.from({ length: 21 }, (_, i) => today.getFullYear() - 10 + i);
   const months = Array.from({ length: 12 }, (_, i) => i);
   const days = Array.from({ length: getDaysInMonth(tempDate) }, (_, i) => i + 1);
@@ -90,6 +101,19 @@ export function DatePicker({
     setTempDate(newDate);
   };
 
+  // 🔥 Scroll automatique vers la date actuelle quand le modal s'ouvre
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => {
+        yearRef.current?.scrollTo({ y: (tempDate.getFullYear() - (today.getFullYear() - 10)) * 40, animated: true });
+        monthRef.current?.scrollTo({ y: tempDate.getMonth() * 40, animated: true });
+        dayRef.current?.scrollTo({ y: (tempDate.getDate() - 1) * 40, animated: true });
+        hourRef.current?.scrollTo({ y: tempDate.getHours() * 40, animated: true });
+        minuteRef.current?.scrollTo({ y: tempDate.getMinutes() * 40, animated: true });
+      }, 300);
+    }
+  }, [isOpen, tempDate]);
+
   return (
     <>
       <TouchableOpacity onPress={openModal} style={styles.input}>
@@ -107,22 +131,22 @@ export function DatePicker({
             <View style={styles.pickerContainer}>
               {mode === 'date' ? (
                 <>
-                  <ScrollView style={styles.pickerColumn}>{years.map(year => (
+                  <ScrollView ref={yearRef} style={styles.pickerColumn}>{years.map(year => (
                     <Text key={year} style={[styles.pickerText, year === tempDate.getFullYear() && styles.selectedPicker]} onPress={() => updateDate('year', year)}>{year}</Text>
                   ))}</ScrollView>
-                  <ScrollView style={styles.pickerColumn}>{months.map(month => (
+                  <ScrollView ref={monthRef} style={styles.pickerColumn}>{months.map(month => (
                     <Text key={month} style={[styles.pickerText, month === tempDate.getMonth() && styles.selectedPicker]} onPress={() => updateDate('month', month)}>{format(new Date(2024, month), 'MMM', { locale: fr })}</Text>
                   ))}</ScrollView>
-                  <ScrollView style={styles.pickerColumn}>{days.map(day => (
+                  <ScrollView ref={dayRef} style={styles.pickerColumn}>{days.map(day => (
                     <Text key={day} style={[styles.pickerText, day === tempDate.getDate() && styles.selectedPicker]} onPress={() => updateDate('day', day)}>{day}</Text>
                   ))}</ScrollView>
                 </>
               ) : (
                 <>
-                  <ScrollView style={styles.pickerColumn}>{hours.map(hour => (
+                  <ScrollView ref={hourRef} style={styles.pickerColumn}>{hours.map(hour => (
                     <Text key={hour} style={[styles.pickerText, hour === tempDate.getHours() && styles.selectedPicker]} onPress={() => updateDate('hour', hour)}>{hour}</Text>
                   ))}</ScrollView>
-                  <ScrollView style={styles.pickerColumn}>{minutes.map(minute => (
+                  <ScrollView ref={minuteRef} style={styles.pickerColumn}>{minutes.map(minute => (
                     <Text key={minute} style={[styles.pickerText, minute === tempDate.getMinutes() && styles.selectedPicker]} onPress={() => updateDate('minute', minute)}>{minute}</Text>
                   ))}</ScrollView>
                 </>
@@ -144,6 +168,7 @@ export function DatePicker({
   );
 }
 
+
 const styles = StyleSheet.create({
   input: { backgroundColor: '#fff', padding: 16, borderRadius: 12 },
   inputContent: { flexDirection: 'row', alignItems: 'center' },
@@ -151,7 +176,16 @@ const styles = StyleSheet.create({
   selectedPicker: { backgroundColor: '#007AFF', color: '#fff', padding: 10, borderRadius: 5 },
   fullScreenContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)' },
-  fullScreenModalContent: { width: SCREEN_WIDTH, height: SCREEN_HEIGHT, backgroundColor: '#fff', padding: 20 },
+  fullScreenModalContent: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT / 2, // Prend la moitié de l'écran
+    backgroundColor: '#fff',
+    padding: 20,
+    position: 'absolute', // Permet de le placer où on veut
+    bottom: 0, // Positionné en bas de l'écran
+    borderTopLeftRadius: 20, // Coins arrondis en haut
+    borderTopRightRadius: 20,
+  },
   pickerContainer: { flexDirection: 'row', height: 200, marginBottom: 20 },
   pickerColumn: { flex: 1 },
   pickerText: { fontSize: 16, color: '#333', textAlign: 'center', padding: 10 },
