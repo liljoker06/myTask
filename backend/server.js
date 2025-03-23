@@ -7,6 +7,7 @@ const cors = require('cors');
 dotenv.config();
 
 const taskStatusUpdater = require('./cronjob/taskStatusUpdater');
+const runWeeklyProgressUpdate = require('./cronjob/updateWeeklyProgress');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.listen(port, () => console.log(`Server running on port ${port}`));
 
 //cron job
 taskStatusUpdater();
+runWeeklyProgressUpdate();
 
 
 

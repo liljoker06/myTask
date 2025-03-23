@@ -16,6 +16,7 @@ export default function HomeScreen({ refreshTasks }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedTask, setSelectedTask] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   // ✅ Charger les tâches du jour
   const fetchTasks = async () => {
@@ -49,7 +50,7 @@ export default function HomeScreen({ refreshTasks }) {
   // ✅ Appeler fetchTasks() au chargement du composant et quand la date change
   useEffect(() => {
     fetchTasks();
-  }, [currentDate, refreshTasks]); // ✅ Recharge les tâches quand la date change
+  }, [currentDate, refreshTasks, refresh]); 
 
   // ✅ Ouvrir la Sidebar
   const openSidebar = (task) => {
@@ -64,11 +65,15 @@ export default function HomeScreen({ refreshTasks }) {
     fetchTasks();
   };
 
+  const handleTaskUpdated = () => {
+    setRefresh((prev) => !prev);
+  };
+
   return (
     <View style={styles.container}>
       <Header />
       <DateDisplay onDateChange={setCurrentDate} />
-      <WeeklyProgressBar refreshTasks={refreshTasks} />
+      <WeeklyProgressBar refreshTasks={refresh} />
 
       <Text style={styles.sectionTitle}>Today's Tasks</Text>
 
@@ -91,7 +96,7 @@ export default function HomeScreen({ refreshTasks }) {
       </ScrollView>
 
       {/* ✅ Sidebar des détails de la tâche */}
-      <TaskDetailSidebar visible={sidebarVisible} onClose={closeSidebar} task={selectedTask} onTaskUpdated={fetchTasks} />
+      <TaskDetailSidebar visible={sidebarVisible} onClose={closeSidebar} task={selectedTask} onTaskUpdated={handleTaskUpdated} />
 
     </View>
   );

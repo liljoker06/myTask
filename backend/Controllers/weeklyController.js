@@ -1,53 +1,46 @@
 const WeeklyProgress = require("../models/WeeklyProgress");
-const Day = require("../models/Day");
+const Task = require("../models/Task");
+const { startOfWeek, endOfWeek } = require("date-fns");
 
-// 🔹 Calculer la progression hebdomadaire
-const calculateWeeklyProgress = async (req, res) => {
+// ✅ Fonction pour recalculer la progression hebdomadaire d'un utilisateur
+const calculateWeeklyProgress = async (userId) => {
   try {
-    const { week_start, week_end } = req.body;
+    const startWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
+    const endWeek = endOfWeek(new Date(), { weekStartsOn: 1 });
 
-    // Vérifier si un enregistrement existe déjà pour cette semaine
-    let weeklyProgress = await WeeklyProgress.findOne({
-      user_id: req.user.id,
-      week_start,
-      week_end,
+    // 📌 Récupérer toutes les tâches de la semaine
+    const weeklyTasks = await Task.find({
+      user_id: userId,
+      start_date: { $gte: startWeek, $lte: endWeek },
     });
 
-    // Récupérer toutes les progressions journalières de la semaine
-    const dailyProgress = await Day.find({
-      user_id: req.user.id,
-      date: { $gte: week_start, $lte: week_end },
-    });
+    const completedTasks = weeklyTasks.filter((task) => task.status === "Completed").length;
+    const progress = weeklyTasks.length > 0 ? (completedTasks / weeklyTasks.length) * 100 : 0;
 
-    // Calculer la progression moyenne
-    const totalProgress = dailyProgress.reduce((acc, day) => acc + day.progress, 0);
-    const averageProgress = dailyProgress.length > 0 ? totalProgress / dailyProgress.length : 0;
+    // 📌 Mettre à jour ou créer la progression dans la BDD
+    await WeeklyProgress.findOneAndUpdate(
+      { user_id: userId, week_start: startWeek },
+      { week_end: endWeek, progress },
+      { upsert: true, new: true }
+    );
 
-    if (weeklyProgress) {
-      weeklyProgress.progress = averageProgress;
-    } else {
-      weeklyProgress = new WeeklyProgress({
-        user_id: req.user.id,
-        week_start,
-        week_end,
-        progress: averageProgress,
-      });
-    }
-
-    await weeklyProgress.save();
-
-    res.status(200).json({ message: "Progression hebdomadaire mise à jour", weeklyProgress });
+    console.log(`✅ Progression mise à jour : ${progress.toFixed(2)}%`);
   } catch (error) {
-    res.status(500).json({ message: "Erreur lors du calcul de la progression hebdomadaire", error: error.message });
+    console.error("❌ Erreur lors du calcul de la progression hebdomadaire", error);
   }
 };
 
-// 🔹 Récupérer la progression hebdomadaire d'un utilisateur
+// 🔹 Récupérer la progression hebdomadaire actuelle
 const getWeeklyProgress = async (req, res) => {
   try {
-    const weeklyProgress = await WeeklyProgress.find({ user_id: req.user.id }).sort({ week_start: -1 });
+    const startWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
 
-    res.status(200).json(weeklyProgress);
+    const progress = await WeeklyProgress.findOne({
+      user_id: req.user.id,
+      week_start: startWeek,
+    });
+
+    res.status(200).json(progress || { progress: 0 });
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la récupération de la progression hebdomadaire", error: error.message });
   }

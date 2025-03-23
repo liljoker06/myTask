@@ -4,37 +4,24 @@ import { ProgressBar } from "react-native-paper";
 import axios from "axios";
 import { API_URL } from "@env";
 import { useAuth } from "../context/AuthContext";
-import { format, startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 
 export default function WeeklyProgressBar({ refreshTasks }) {
   const { authState } = useAuth();
   const [progress, setProgress] = useState(0);
 
-  // ✅ Récupérer les tâches de la semaine
   const fetchWeeklyProgress = async () => {
     try {
-      const response = await axios.get(`${API_URL}/task/`, {
+      const response = await axios.get(`${API_URL}/weekly-progress/`, {
         headers: { Authorization: `Bearer ${authState.token}` },
       });
 
-      // 📌 Filtrer les tâches de la semaine
-      const startWeek = startOfWeek(new Date(), { weekStartsOn: 1 }); 
-      const endWeek = endOfWeek(new Date(), { weekStartsOn: 1 }); 
-
-      const weeklyTasks = response.data.filter((task) =>
-        isWithinInterval(new Date(task.start_date), { start: startWeek, end: endWeek })
-      );
-
-      const completedTasks = weeklyTasks.filter((task) => task.status === "Completed");
-
-      const progressPercentage = weeklyTasks.length > 0 ? completedTasks.length / weeklyTasks.length : 0;
-      setProgress(progressPercentage);
+      setProgress(response.data.progress / 100); // ✅ Convertir en format 0 à 1 pour ProgressBar
     } catch (error) {
-      console.error("❌ Erreur lors du chargement des tâches de la semaine", error);
+      console.error("❌ Erreur lors du chargement de la progression hebdomadaire", error);
     }
   };
 
-  // ✅ Mettre à jour la barre à chaque changement de `refreshTasks`
+  // ✅ Met à jour la barre dès que `refreshTasks` change
   useEffect(() => {
     fetchWeeklyProgress();
   }, [refreshTasks]);
@@ -48,7 +35,6 @@ export default function WeeklyProgressBar({ refreshTasks }) {
   );
 }
 
-// 🎨 Styles
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,

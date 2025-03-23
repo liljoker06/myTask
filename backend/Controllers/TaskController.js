@@ -3,8 +3,6 @@ const Day = require("../models/Day");
 
 // 🔹 Créer une nouvelle tâche
 const createTask = async (req, res) => {
-
-  console.log('je rentre dans le try ')
   try {
     const { title, description, start_date, end_date, duration } = req.body;
 
@@ -15,17 +13,33 @@ const createTask = async (req, res) => {
       start_date,
       end_date,
       duration,
+      status: "Not started", // ✅ Défaut : "Not started"
     });
 
-    console.log('createTask creation en cours.... ');
-
     await newTask.save();
-    console.log('createTask creation terminée.... ');
+
+    // ✅ Générer les entrées `Day` pour chaque jour de la tâche
+    const startDate = new Date(start_date);
+    const endDate = new Date(end_date);
+
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      await Day.create({
+        user_id: req.user.id,
+        date: currentDate,
+        task_id: newTask._id,
+        progress: 0, // ✅ Par défaut, aucune progression
+      });
+
+      currentDate.setDate(currentDate.getDate() + 1); // ✅ Passer au jour suivant
+    }
+
     res.status(201).json({ message: "Tâche créée avec succès", task: newTask });
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la création de la tâche", error: error.message });
   }
 };
+
 
 // 🔹 Récupérer toutes les tâches d'un utilisateur
 const getTasks = async (req, res) => {
@@ -58,14 +72,18 @@ const updateTask = async (req, res) => {
 
 const updateTaskStatus = async (req, res) => {
   try {
-    const { status } = req.body; // ✅ On récupère uniquement le statut
+    const { status } = req.body;
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user_id: req.user.id },
-      { status }, // ✅ On met à jour uniquement le statut
+      { status },
       { new: true }
     );
 
     if (!task) return res.status(404).json({ message: "Tâche non trouvée" });
+
+    // ✅ Mettre à jour aussi la progression des jours associés
+    const progressValue = status === "Completed" ? 100 : status === "In progress" ? 50 : 0;
+    await Day.updateMany({ task_id: task._id }, { progress: progressValue });
 
     res.status(200).json({ message: "Tâche mise à jour", task });
   } catch (error) {
