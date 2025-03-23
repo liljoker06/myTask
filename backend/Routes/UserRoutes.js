@@ -11,7 +11,7 @@ router.post('/auth', UserControllers.login);
 
 router.get('/me', authMiddleware , UserControllers.getme);
 
-router.put('/update', authMiddleware, UserControllers.updateProfileasync);
+router.put('/update', authMiddleware, UserControllers.updateProfile);
 
 
 

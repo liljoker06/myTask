@@ -8,7 +8,7 @@ interface User {
     id: string;
     username: string;
     email: string;
-    profilePic: string;
+    profile_pic: string;
 }
 
 interface AuthProps {

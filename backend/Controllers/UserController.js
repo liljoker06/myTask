@@ -91,7 +91,7 @@ const getme = async (req, res) => {
 
 
 
-const updateProfileasync= async (req, res) => {
+const updateProfile = async (req, res) => {
     try {
       const { username, email, profile_pic } = req.body;
   
@@ -102,7 +102,7 @@ const updateProfileasync= async (req, res) => {
   
       user.username = username || user.username;
       user.email = email || user.email;
-      user.profile_pic = profile_pic || user.profile_pic;
+      user.profilePic = profilePic || user.profile_pic;
   
       await user.save();
   
